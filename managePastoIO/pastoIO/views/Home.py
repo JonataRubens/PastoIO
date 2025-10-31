@@ -1,6 +1,6 @@
-from django.views import View
+from django.views.generic import TemplateView
 from django.http import HttpResponse
 
-class HomeView(View):
-    def get(self, request, *args, **kwargs):
-        return HttpResponse("PastoIO rodando. Vá para /admin/")
+class HomeView(TemplateView):
+    template_name = "dashboard/Home.html"
+
