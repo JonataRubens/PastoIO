@@ -1,0 +1,227 @@
+{% load static %}
+<div class="sidebar" data-background-color="dark">
+  <div class="sidebar-logo">
+    <div class="logo-header" data-background-color="dark">
+      <a href="{% url 'home' %}" class="logo">
+        <img src="{% static 'kaiadmin/assets/img/kaiadmin/logo_light.svg' %}" class="navbar-brand" height="20" alt="PastoIO" />
+      </a>
+      <div class="nav-toggle">
+        <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+        <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+      </div>
+      <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+    </div>
+  </div>
+
+  <div class="sidebar-wrapper scrollbar scrollbar-inner">
+    <div class="sidebar-content">
+      <ul class="nav nav-secondary">
+        <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+          <a href="{% url 'home' %}"><i class="fas fa-home"></i><p>Home</p></a>
+        </li>
+
+        <li class="nav-section">
+          <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
+          <h4 class="text-section">Gerenciar</h4>
+        </li>
+
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#menu-admin"><i class="fas fa-layer-group"></i><p>Administrar</p><span class="caret"></span></a>
+          <div class="collapse" id="menu-admin">
+            <ul class="nav nav-collapse">
+              <li><a href="#"><span class="sub-item">Cabeças</span></a></li>
+              <li><a href="#"><span class="sub-item">Fazendas</span></a></li>
+              <li><a href="#"><span class="sub-item">Pessoas</span></a></li>
+              <li><a href="#"><span class="sub-item">Organização</span></a></li>
+              <li><a href="#"><span class="sub-item">Veículos</span></a></li>
+              <li><a href="#"><span class="sub-item">Financeiro</span></a></li>
+            </ul>
+          </div>
+        </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarLayouts1">
+                  <i class="fas fa-th-list"></i>
+                  <p>Relatorios</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="sidebarLayouts1">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="components/sidebar-style-2.html">
+                        <span class="sub-item">Relatorios geral</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="icon-menu.html">
+                        <span class="sub-item">Relatorios Personalizado</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarLayouts2">
+                  <i class="fas fa-th-list"></i>
+                  <p>Finaceiro</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="sidebarLayouts2">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="components/sidebar-style-2.html">
+                        <span class="sub-item">Relatorios Geral financeiro</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="icon-menu.html">
+                        <span class="sub-item">Relatorios Personalizado</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables">
+                  <i class="fas fa-table"></i>
+                  <p>Visualizador de tabelas</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="tables/tables.html">
+                        <span class="sub-item">Animais</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="tables/datatables.html">
+                        <span class="sub-item">exemplo</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="maps/googlemaps.html">
+                        <span class="sub-item">Fazendas</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="maps/jsvectormap.html">
+                        <span class="sub-item">Plots</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#submenu">
+                  <i class="fas fa-bars"></i>
+                  <p>Outros</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="submenu">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a data-bs-toggle="collapse" href="#subnav1">
+                        <span class="sub-item">Pastagem</span>
+                        <span class="caret"></span>
+                      </a>
+                      <div class="collapse" id="subnav1">
+                        <ul class="nav nav-collapse subnav">
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Pastos</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Pastos recovery</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                    </li>
+
+                    <li>
+                      <a data-bs-toggle="collapse" href="#subnav4">
+                        <span class="sub-item">Veiculos</span>
+                        <span class="caret"></span>
+                      </a>
+                      <div class="collapse" id="subnav4">
+                        <ul class="nav nav-collapse subnav">
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Proprios</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Veiculos de trabalho</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                    </li>
+
+                    <li>
+                      <a data-bs-toggle="collapse" href="#subnav3">
+                        <span class="sub-item">Animais</span>
+                        <span class="caret"></span>
+                      </a>
+                      <div class="collapse" id="subnav3">
+                        <ul class="nav nav-collapse subnav">
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Animais rendidos</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Animais falecidos</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Animais Doentes</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Animais Em observação</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                    </li>
+                    <li>
+                      <a data-bs-toggle="collapse" href="#subnav2">
+                        <span class="sub-item">Fazendas</span>
+                        <span class="caret"></span>
+                      </a>
+                      <div class="collapse" id="subnav2">
+                        <ul class="nav nav-collapse subnav">
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Fazendas</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Fazendas rendidas</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+        <!-- adicione outros grupos conforme for criando as URLs -->
+      </ul>
+    </div>
+  </div>
+</div>

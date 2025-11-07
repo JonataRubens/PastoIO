@@ -1,0 +1,24 @@
+{% load static %}
+<nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+  <div class="container-fluid">
+    <form class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+      <div class="input-group">
+        <button type="submit" class="btn btn-search pe-1"><i class="fa fa-search search-icon"></i></button>
+        <input type="text" placeholder="Pesquisar ..." class="form-control" />
+      </div>
+    </form>
+
+    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+      <!-- atalhos/usuário (mantenha os seus itens aqui) -->
+      <li class="nav-item topbar-user dropdown hidden-caret">
+        <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"><div class="avatar-sm">
+          <img src="{% static 'kaiadmin/assets/img/profile.jpg' %}" class="avatar-img rounded-circle" alt="" />
+        </div><span class="profile-username"><span class="op-7">Olá,</span> <span class="fw-bold">Usuário</span></span></a>
+        <ul class="dropdown-menu dropdown-user animated fadeIn">
+          <li><a class="dropdown-item" href="#">Minha Conta</a></li>
+          <li><a class="dropdown-item" href="#">Sair</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

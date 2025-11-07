@@ -1,0 +1,50 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}PastoIO{% endblock %}</title>
+
+    {% include "Partials/_head_assets.html" %}
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <div class="wrapper">
+      {% include "Partials/_sidebar.html" %}
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- mantém o header compacto; o resto fica na navbar -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'kaiadmin/assets/img/kaiadmin/logo_light.svg' %}" height="20" alt="PastoIO" />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+              </div>
+              <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+            </div>
+          </div>
+
+          {% include "Partials/_navbar.html" %}
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+
+        {% include "Partials/_footer.html" %}
+      </div>
+
+      <!-- Painel de configurações do tema (opcional) -->
+      {% block customizer %}{% endblock %}
+    </div>
+
+    {% include "Partials/_scripts.html" %}
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

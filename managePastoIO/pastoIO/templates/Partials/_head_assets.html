@@ -1,0 +1,19 @@
+{% load static %}
+<link rel="icon" href="{% static 'kaiadmin/assets/img/kaiadmin/favicon.ico' %}" type="image/x-icon" />
+<script src="{% static 'kaiadmin/assets/js/plugin/webfont/webfont.min.js' %}"></script>
+<script>
+  WebFont.load({
+    google: { families: ["Public Sans:300,400,500,600,700"] },
+    custom: {
+      families: ["Font Awesome 5 Solid","Font Awesome 5 Regular","Font Awesome 5 Brands","simple-line-icons"],
+      urls: ["{% static 'kaiadmin/assets/css/fonts.min.css' %}"],
+    },
+    active: function () { sessionStorage.fonts = true; },
+  });
+</script>
+
+<link rel="stylesheet" href="{% static 'kaiadmin/assets/css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{% static 'kaiadmin/assets/css/plugins.min.css' %}" />
+<link rel="stylesheet" href="{% static 'kaiadmin/assets/css/kaiadmin.min.css' %}" />
+<!-- Demo: remova em produção -->
+<link rel="stylesheet" href="{% static 'kaiadmin/assets/css/demo.css' %}" />
