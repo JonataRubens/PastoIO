@@ -1,0 +1,77 @@
+{% extends "Base/Base.html" %}
+{% block title %}Animais • PastoIO{% endblock %}
+
+{% block content %}
+<div class="page-inner">
+  <div class="d-flex align-items-center mb-3">
+    <h3 class="fw-bold mb-0">Cabeças</h3>
+    <form class="ms-auto d-flex gap-2" method="get">
+      <input name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Buscar por brinco/obs">
+      <select name="sexo" class="form-select">
+        <option value="">Sexo</option>
+        {% for val,label in SEXO_CHOICES %}
+          <option value="{{val}}" {% if request.GET.sexo == val %}selected{% endif %}>{{label}}</option>
+        {% endfor %}
+      </select>
+      <select name="status" class="form-select">
+        <option value="">Status</option>
+        {% for val,label in STATUS_CHOICES %}
+          <option value="{{val}}" {% if request.GET.status == val %}selected{% endif %}>{{label}}</option>
+        {% endfor %}
+      </select>
+      <button class="btn btn-primary">Filtrar</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Brinco</th>
+              <th>Sexo</th>
+              <th>Status</th>
+              <th>Raça</th>
+              <th>Lote</th>
+              <th>Fazenda</th>
+              <th>Dono</th>
+              <th>Responsável</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in animais %}
+            <tr>
+              <td class="fw-semibold">{{ a.brinco }}</td>
+              <td>{{ a.get_sexo_display }}</td>
+              <td><span class="badge bg-secondary">{{ a.get_status_display }}</span></td>
+              <td>{{ a.raca|default:"—" }}</td>
+              <td>{{ a.lote_atual|default:"—" }}</td>
+              <td>{{ a.lote_atual.fazenda|default:"—" }}</td>
+              <td>{{ a.dono|default:"—" }}</td>
+              <td>{{ a.responsavel|default:"—" }}</td>
+            </tr>
+            {% empty %}
+              <tr><td colspan="8" class="text-center text-muted">Nenhum animal encontrado.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if is_paginated %}
+      <nav class="mt-3">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}{% if request.GET.sexo %}sexo={{request.GET.sexo}}&{% endif %}{% if request.GET.status %}status={{request.GET.status}}&{% endif %}page={{ page_obj.previous_page_number }}">«</a></li>
+          {% endif %}
+          <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+          {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}{% if request.GET.sexo %}sexo={{request.GET.sexo}}&{% endif %}{% if request.GET.status %}status={{request.GET.status}}&{% endif %}page={{ page_obj.next_page_number }}">»</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

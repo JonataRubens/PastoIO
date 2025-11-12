@@ -1,0 +1,35 @@
+{% extends "Base/Base.html" %}
+{% block title %}Organizações • PastoIO{% endblock %}
+
+{% block content %}
+<div class="page-inner">
+  <div class="d-flex align-items-center mb-3">
+    <h3 class="fw-bold mb-0">Organização</h3>
+    <form class="ms-auto d-flex gap-2" method="get">
+      <input name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Buscar por nome">
+      <button class="btn btn-primary">Filtrar</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead><tr><th>Nome</th><th>Criada em</th></tr></thead>
+          <tbody>
+            {% for o in organizacoes %}
+              <tr>
+                <td class="fw-semibold">{{ o.nome }}</td>
+                <td>{{ o.criado_em|date:"d/m/Y H:i" }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="2" class="text-center text-muted">Nenhuma organização.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

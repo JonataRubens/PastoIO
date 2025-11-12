@@ -1,0 +1,44 @@
+{% extends "Base/Base.html" %}
+{% block title %}Fazendas • PastoIO{% endblock %}
+
+{% block content %}
+<div class="page-inner">
+  <div class="d-flex align-items-center mb-3">
+    <h3 class="fw-bold mb-0">Fazendas</h3>
+    <form class="ms-auto d-flex gap-2" method="get">
+      <input name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Buscar por nome/cidade/UF">
+      <button class="btn btn-primary">Filtrar</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Cidade/UF</th>
+              <th>Organização</th>
+              <th>Observações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for f in fazendas %}
+              <tr>
+                <td class="fw-semibold">{{ f.nome }}</td>
+                <td>{{ f.cidade }}/{{ f.estado }}</td>
+                <td>{{ f.organizacao }}</td>
+                <td class="text-truncate" style="max-width:360px">{{ f.observacoes|default:"—" }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="4" class="text-center text-muted">Nenhuma fazenda.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

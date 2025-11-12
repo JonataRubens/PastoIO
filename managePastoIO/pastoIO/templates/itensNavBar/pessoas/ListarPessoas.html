@@ -1,0 +1,51 @@
+{% extends "Base/Base.html" %}
+{% block title %}Pessoas • PastoIO{% endblock %}
+
+{% block content %}
+<div class="page-inner">
+  <div class="d-flex align-items-center mb-3">
+    <h3 class="fw-bold mb-0">Pessoas</h3>
+    <form class="ms-auto d-flex gap-2" method="get">
+      <input name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Buscar por nome/telefone">
+      <select name="funcao" class="form-select">
+        <option value="">Função</option>
+        {% for val,label in FUNCAO_CHOICES %}
+          <option value="{{val}}" {% if request.GET.funcao == val %}selected{% endif %}>{{label}}</option>
+        {% endfor %}
+      </select>
+      <button class="btn btn-primary">Filtrar</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Função</th>
+              <th>Telefone</th>
+              <th>Organização</th>
+              <th>Observações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in pessoas %}
+              <tr>
+                <td class="fw-semibold">{{ p.nome }}</td>
+                <td>{{ p.get_funcao_display|default:"—" }}</td>
+                <td>{{ p.telefone|default:"—" }}</td>
+                <td>{{ p.organizacao }}</td>
+                <td class="text-truncate" style="max-width:360px">{{ p.observacoes|default:"—" }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="5" class="text-center text-muted">Nenhuma pessoa.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
