@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h5 class="modal-title">Editar Fazenda</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<style>
+  /* impede que qualquer filho da grid estoure a caixa */
+  .modal .card-body .row > [class*="col"] { min-width: 0; }
+
+  /* limite explícito para o campo UF (input/select com name="estado") */
+  .modal input[name="estado"],
+  .modal select[name="estado"]{
+    max-width: 120px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    display: block;
+  }
+
+  /* só por segurança, clipa qualquer sobra da caixa interna */
+  .modal .edit-box, .modal .card-body { overflow: hidden; }
+</style>
+
+<form method="post" action="{% url 'fazenda_modal_editar' object.pk %}">
+  {% csrf_token %}
+  <div class="modal-body">
+  <div class="modal-box shadow-sm rounded-3 border bg-white p-4">
+    <!-- zera as margens laterais do grid e usa colunas estáveis -->
+    <div class="row gx-3 gy-3 mx-0">
+
+      <div class="col-12 col-md-6">
+        <label class="form-label">Nome</label>
+        {{ form.nome }}
+      </div>
+
+      <div class="col-12 col-md-4">
+        <label class="form-label">Cidade</label>
+        {{ form.cidade }}
+      </div>
+
+        <div class="col-6 col-md-2 uf-col">
+          <label class="form-label">UF</label>
+          {{ form.estado }}
+        </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label">Organização</label>
+        {{ form.organizacao }}
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Observações</label>
+        {{ form.observacoes }}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button class="btn btn-primary">Salvar</button>
+  </div>
+</form>

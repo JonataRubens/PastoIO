@@ -1,3 +1,4 @@
+{# templates/fazendas/ListarFazendas.html #}
 {% extends "Base/Base.html" %}
 {% block title %}Fazendas • PastoIO{% endblock %}
 
@@ -21,6 +22,7 @@
               <th>Cidade/UF</th>
               <th>Organização</th>
               <th>Observações</th>
+              <th class="text-end">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -30,15 +32,78 @@
                 <td>{{ f.cidade }}/{{ f.estado }}</td>
                 <td>{{ f.organizacao }}</td>
                 <td class="text-truncate" style="max-width:360px">{{ f.observacoes|default:"—" }}</td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-outline-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalGeral"
+                          data-url="{% url 'fazenda_modal_detalhe' f.pk %}">
+                    Detalhes
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary ms-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalGeral"
+                          data-url="{% url 'fazenda_modal_editar' f.pk %}">
+                    Editar
+                  </button>
+                </td>
               </tr>
             {% empty %}
-              <tr><td colspan="4" class="text-center text-muted">Nenhuma fazenda.</td></tr>
+              <tr><td colspan="5" class="text-center text-muted">Nenhuma fazenda.</td></tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </div>
+
+{# modal genérico (uma vez na página) #}
+<div class="modal fade" id="modalGeral" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content" id="modalGeralContent">
+      <div class="p-4 text-center text-muted">Carregando…</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{# se o JS do modal já está no Base ou na página de animais, pode remover este bloco #}
+<script>
+  const modalEl = document.getElementById('modalGeral');
+  if (modalEl) {
+    modalEl.addEventListener('show.bs.modal', (ev) => {
+      const btn = ev.relatedTarget;
+      const url = btn?.getAttribute('data-url');
+      const box = modalEl.querySelector('#modalGeralContent');
+      box.innerHTML = '<div class="p-4 text-center text-muted">Carregando…</div>';
+      if (!url) return;
+      fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
+        .then(r => r.text())
+        .then(html => box.innerHTML = html)
+        .catch(() => box.innerHTML = '<div class="p-4 text-danger text-center">Erro ao carregar.</div>');
+    });
+
+    modalEl.addEventListener('submit', (e) => {
+      const form = e.target.closest('form');
+      if (!form) return;
+      e.preventDefault();
+      const box = modalEl.querySelector('#modalGeralContent');
+      const fd  = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        headers: {'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': getCookie('csrftoken')},
+        body: fd
+      })
+      .then(r => r.text())
+      .then(html => box.innerHTML = html)
+      .catch(() => box.innerHTML = '<div class="p-4 text-danger text-center">Erro ao salvar.</div>');
+    });
+  }
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+</script>
 {% endblock %}

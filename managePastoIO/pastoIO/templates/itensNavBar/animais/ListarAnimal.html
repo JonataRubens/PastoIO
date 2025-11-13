@@ -37,6 +37,7 @@
               <th>Fazenda</th>
               <th>Dono</th>
               <th>Responsável</th>
+              <th class="text-end">Ações</th>  {# <-- NOVO #}
             </tr>
           </thead>
           <tbody>
@@ -50,11 +51,39 @@
               <td>{{ a.lote_atual.fazenda|default:"—" }}</td>
               <td>{{ a.dono|default:"—" }}</td>
               <td>{{ a.responsavel|default:"—" }}</td>
+
+              <td class="text-end">
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalGeral"
+                  data-url="{% url 'animal_modal_detalhe' a.pk %}">
+                  Detalhes
+                </button>
+
+                <button
+                  class="btn btn-sm btn-outline-secondary ms-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalGeral"
+                  data-url="{% url 'animal_modal_editar' a.pk %}">
+                  Editar
+                </button>
+              </td>
             </tr>
             {% empty %}
-              <tr><td colspan="8" class="text-center text-muted">Nenhum animal encontrado.</td></tr>
+            <tr><td colspan="9" class="text-center text-muted">Nenhum animal encontrado.</td></tr>
             {% endfor %}
           </tbody>
+
+          {# Modal genérico (uma vez só na página) #}
+          <div class="modal fade" id="modalGeral" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+              <div class="modal-content" id="modalGeralContent">
+                <div class="p-4 text-center text-muted">Carregando…</div>
+              </div>
+            </div>
+          </div>
+
         </table>
       </div>
 
@@ -74,4 +103,56 @@
     </div>
   </div>
 </div>
+{% block extra_js %}
+<script>
+  // garante que o elemento existe
+  const modalEl = document.getElementById('modalGeral');
+  if (modalEl) {
+    // abre o modal e carrega o HTML via fetch
+    modalEl.addEventListener('show.bs.modal', (ev) => {
+      const btn = ev.relatedTarget;
+      const url = btn?.getAttribute('data-url');
+      const box = modalEl.querySelector('#modalGeralContent');
+      box.innerHTML = '<div class="p-4 text-center text-muted">Carregando…</div>';
+      if (!url) return;
+
+      fetch(url, { headers: {'X-Requested-With':'XMLHttpRequest'} })
+        .then(r => r.text())
+        .then(html => box.innerHTML = html)
+        .catch(() => box.innerHTML = '<div class="p-4 text-danger text-center">Erro ao carregar.</div>');
+    });
+
+    // intercepta submit do form dentro do modal (edição)
+    modalEl.addEventListener('submit', (e) => {
+      const form = e.target.closest('form');
+      if (!form) return;
+      e.preventDefault();
+
+      const box = modalEl.querySelector('#modalGeralContent');
+      const fd  = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: fd,
+      })
+      .then(r => r.text())
+      .then(html => box.innerHTML = html)
+      .catch(() => box.innerHTML = '<div class="p-4 text-danger text-center">Erro ao salvar.</div>');
+    });
+  }
+
+  // utilitário para csrf
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+</script>
+{% endblock %}
+
+  
 {% endblock %}

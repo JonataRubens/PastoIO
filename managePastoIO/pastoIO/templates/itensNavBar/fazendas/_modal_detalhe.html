@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h5 class="modal-title">Detalhes da Fazenda</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+  <!-- box igual à do Animal -->
+  <div class="modal-box shadow-sm rounded-3 border bg-white p-4">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <div class="text-muted small">Nome</div>
+          <div class="fw-semibold">{{ object.nome }}</div>
+        </div>
+        <div class="mb-3">
+          <div class="text-muted small">Cidade/UF</div>
+          <div class="fw-semibold">{{ object.cidade }}/{{ object.estado }}</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <div class="text-muted small">Organização</div>
+          <div class="fw-semibold">{{ object.organizacao|default:"—" }}</div>
+        </div>
+        <div class="mb-1">
+          <div class="text-muted small">Observações</div>
+          <!-- quebra as linhas e palavras longas -->
+          <p class="mb-0 text-wrap" style="white-space:normal;word-break:break-word;">
+            {{ object.observacoes|default:"—" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+</div>

@@ -1,0 +1,62 @@
+{% load static %}
+
+<div class="modal-header">
+  <h5 class="modal-title">Detalhes do animal — {{ object.brinco }}</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+  <div class="info-box shadow-sm rounded-3 border p-3">
+    <div class="row g-4">
+      <div class="col-md-3">
+        {% if object.foto %}
+          <a href="{{ object.foto.url }}" target="_blank" class="d-block">
+            <img src="{{ object.foto.url }}" class="thumb img-fluid mb-2" alt="Foto do animal">
+          </a>
+          <small class="text-muted d-block">Clique para ampliar</small>
+        {% else %}
+          <div class="ratio ratio-16x9 bg-light d-flex align-items-center justify-content-center rounded">
+            <span class="text-muted">Sem foto</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-9">
+        <div class="row g-3">
+          <div class="col-md-4"><strong>Brinco:</strong> {{ object.brinco }}</div>
+          <div class="col-md-4"><strong>Sexo:</strong> {{ object.get_sexo_display }}</div>
+          <div class="col-md-4"><strong>Status:</strong> {{ object.get_status_display }}</div>
+
+          <div class="col-md-4"><strong>Raça:</strong> {{ object.raca|default:"—" }}</div>
+          <div class="col-md-4"><strong>Pelagem:</strong> {{ object.pelagem|default:"—" }}</div>
+          <div class="col-md-4"><strong>Origem:</strong> {{ object.get_origem_display|default:"—" }}</div>
+
+          <div class="col-md-4"><strong>Mãe:</strong> {{ object.mae|default:"—" }}</div>
+          <div class="col-md-4"><strong>Pai:</strong> {{ object.pai|default:"—" }}</div>
+          <div class="col-md-4"><strong>Dono:</strong> {{ object.dono|default:"—" }}</div>
+
+          <div class="col-md-4"><strong>Responsável:</strong> {{ object.responsavel|default:"—" }}</div>
+          <div class="col-md-4"><strong>Lote atual:</strong> {{ object.lote_atual|default:"—" }}</div>
+          <div class="col-md-4"><strong>Fazenda:</strong> {{ object.lote_atual.fazenda|default:"—" }}</div>
+
+          <div class="col-md-4"><strong>Nascimento:</strong> {{ object.data_nascimento|date:"d/m/Y"|default:"—" }}</div>
+          <div class="col-md-4"><strong>Compra:</strong> {{ object.data_compra|date:"d/m/Y"|default:"—" }}</div>
+          <div class="col-md-4"><strong>Preço compra:</strong> {{ object.preco_compra|default:"—" }}</div>
+
+          <div class="col-12">
+            <strong>Fornecedor:</strong> {{ object.fornecedor|default:"—" }}
+          </div>
+          <div class="col-12">
+            <strong>Observações:</strong>
+            <div class="mt-1 small text-body">{{ object.observacoes|linebreaksbr|default:"—" }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+</div>

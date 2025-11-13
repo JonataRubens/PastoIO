@@ -8,6 +8,58 @@
     {% include "Partials/_head_assets.html" %}
     {% block extra_css %}{% endblock %}
   </head>
+
+    <style>
+            /* deixa o conteúdo “menorzinho” dentro do modal */
+      .compact-box { 
+        max-width: 900px;      /* ajuste: 760–980px */
+      }
+
+      /* tira a sensação de “vazado” e evita barra horizontal */
+      .modal-body { overflow-x: hidden; }
+
+      /* só um acabamento na figura */
+      .preview-figure { border-radius: .5rem; }
+
+      /* caixinha dos modais */
+      .modal .info-box{
+        background: var(--bs-light-bg-subtle, #f8f9fa);
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: .75rem;
+      }
+      /* thumb da foto */
+      .modal .thumb{
+        width: 100%;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        border-radius: .5rem;
+      }
+      /* textarea menor para observações no editar */
+      .modal textarea.obs-area{
+        min-height: 90px;
+        max-height: 140px;
+        resize: vertical;
+      }
+      /* evita scrollbar horizontal no modal */
+      .modal-body { overflow-x: hidden; }
+
+      .break-anywhere{overflow-wrap:anywhere;word-break:break-word;        white-space:pre-wrap}
+      .foto-animal{width:100%;max-height:220px;object-fit:cover}
+
+        .modal-backdrop {
+      --bs-backdrop-bg: #000;      /* cor do fundo (preto) */
+      --bs-backdrop-opacity: .75;  /* quão escuro (0–1) */
+
+        /* evita a “sobressaída” horizontal do gutter do Bootstrap */
+      .modal-box .row { margin-left: 0; margin-right: 0; }
+  /* garante que todos os controles respeitem a largura da coluna */
+      .modal .form-control, .modal .form-select { width: 100%; }
+  }
+
+</style>
+
+
+
   <body>
     <div class="wrapper">
       {% include "Partials/_sidebar.html" %}

@@ -1,6 +1,6 @@
 from .Home import HomeView 
-from .Animais import AnimaisListView
-from .Fazendas import FazendasListView
+from .Animais import AnimaisListView, AnimalDetailModalView, AnimalUpdateModalView
+from .Fazendas import FazendasListView, FazendaDetailModalView, FazendaUpdateModalView, FazendaForm
 from .Pessoas import PessoasListView
 from .Organizacoes import OrganizacoesListView
 from .Eventos import EventosListView
