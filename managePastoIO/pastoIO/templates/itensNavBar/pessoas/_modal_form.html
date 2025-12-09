@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h5 class="modal-title">Editar pessoa — {{ object.nome }}</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<form method="post" action="{% url 'pessoa_modal_editar' object.pk %}">
+  {% csrf_token %}
+  <div class="modal-body">
+    <div class="info-box p-3">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nome</label>
+          {{ form.nome }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Função</label>
+          {{ form.funcao }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Telefone</label>
+          {{ form.telefone }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Organização</label>
+          {{ form.organizacao }}
+        </div>
+        <div class="col-12">
+          <label class="form-label">Observações</label>
+          {{ form.observacoes }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button class="btn btn-primary">Salvar</button>
+  </div>
+</form>

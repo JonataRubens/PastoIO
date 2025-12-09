@@ -28,6 +28,7 @@
               <th>Telefone</th>
               <th>Organização</th>
               <th>Observações</th>
+              <th class="text-end">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -38,14 +39,90 @@
                 <td>{{ p.telefone|default:"—" }}</td>
                 <td>{{ p.organizacao }}</td>
                 <td class="text-truncate" style="max-width:360px">{{ p.observacoes|default:"—" }}</td>
+                <td class="text-end">
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalGeral"
+                    data-url="{% url 'pessoa_modal_detalhe' p.pk %}">
+                    Detalhes
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary ms-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalGeral"
+                    data-url="{% url 'pessoa_modal_editar' p.pk %}">
+                    Editar
+                  </button>
+                </td>
               </tr>
             {% empty %}
-              <tr><td colspan="5" class="text-center text-muted">Nenhuma pessoa.</td></tr>
+              <tr><td colspan="6" class="text-center text-muted">Nenhuma pessoa.</td></tr>
             {% endfor %}
           </tbody>
-        </table>
-      </div>
+        </table>  {# <-- FECHA A TABELA #}
+      </div>       {# .table-responsive #}
+    </div>         {# .card-body #}
+  </div>           {# .card #}
+</div>             {# .page-inner #}
+
+{# Modal genérico fora da tabela #}
+<div class="modal fade" id="modalGeral" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content" id="modalGeralContent">
+      <div class="p-4 text-center text-muted">Carregando…</div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // garante que o elemento existe
+  const modalEl = document.getElementById('modalGeral');
+  if (modalEl) {
+    // abre o modal e carrega o HTML via fetch
+    modalEl.addEventListener('show.bs.modal', (ev) => {
+      const btn = ev.relatedTarget;
+      const url = btn?.getAttribute('data-url');
+      const box = modalEl.querySelector('#modalGeralContent');
+      box.innerHTML = '<div class="p-4 text-center text-muted">Carregando…</div>';
+      if (!url) return;
+
+      fetch(url, { headers: {'X-Requested-With':'XMLHttpRequest'} })
+        .then(r => r.text())
+        .then(html => box.innerHTML = html)
+        .catch(() => box.innerHTML = '<div class="p-4 text-danger text-center">Erro ao carregar.</div>');
+    });
+
+    // intercepta submit do form dentro do modal (edição)
+    modalEl.addEventListener('submit', (e) => {
+      const form = e.target.closest('form');
+      if (!form) return;
+      e.preventDefault();
+
+      const box = modalEl.querySelector('#modalGeralContent');
+      const fd  = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: fd,
+      })
+      .then(r => r.text())
+      .then(html => box.innerHTML = html)
+      .catch(() => box.innerHTML = '<div class="p-4 text-danger text-center">Erro ao salvar.</div>');
+    });
+  }
+
+  // utilitário para csrf
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+</script>
 {% endblock %}
